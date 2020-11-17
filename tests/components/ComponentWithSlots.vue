@@ -13,6 +13,7 @@
       <slot name="scoped" v-bind="{ boolean, string, object }" />
     </div>
     <div class="scopedWithDefault">
+      <!-- why v-bind="{ boolean, string, object }-->
       <slot name="scopedWithDefault" v-bind="{ boolean, string, object }">
         boolean: {{ boolean }}
         string: {{ string }}

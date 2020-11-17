@@ -127,6 +127,7 @@ function getEventProperties(eventParams: EventParams) {
   }
 }
 
+// why
 function createEvent(eventParams: EventParams) {
   const { eventProperties, meta, eventType } = getEventProperties(eventParams)
 

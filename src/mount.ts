@@ -80,6 +80,10 @@ export function mount(
 ): VueWrapper<ComponentPublicInstance<any>>
 
 // Functional component with emits
+
+// todo 为什么 <Props, E extends EmitsOptions = {}>
+// 为什么 声明类型和 实际js 都是 export function mount
+
 export function mount<Props, E extends EmitsOptions = {}>(
   originalComponent: FunctionalComponent<Props, E>,
   options?: MountingOptions<Props>
@@ -245,6 +249,8 @@ export function mount(
     // we capture events using a mixin that mutates `emit` in `beforeCreate`,
     // but functional components do not support mixins, so we need to wrap it
     // and make it a non-functional component for testing purposes.
+
+    // todo why defineComponent what is originalComponent
     component = defineComponent({
       setup: (_, { attrs, slots, emit }) => () => {
         return h((props: any, ctx: any) =>
@@ -253,6 +259,7 @@ export function mount(
       }
     })
   } else if (isObjectComponent(originalComponent)) {
+    // why {... object}
     component = { ...originalComponent }
   } else {
     component = originalComponent
@@ -260,6 +267,7 @@ export function mount(
 
   const el = document.createElement('div')
 
+  // vue3 attach to
   if (options?.attachTo) {
     let to: Element | null
     if (typeof options.attachTo === 'string') {
@@ -283,7 +291,8 @@ export function mount(
       (
         acc: { [key: string]: Function },
         [name, slot]: [string, Slot]
-      ): { [key: string]: Function } => {
+      ): // why { [key: string]: Function }
+      { [key: string]: Function } => {
         // case of an SFC getting passed
         if (typeof slot === 'object' && 'render' in slot) {
           acc[name] = slot.render
@@ -296,6 +305,7 @@ export function mount(
         }
 
         if (typeof slot === 'object') {
+          // why  acc[name]()()
           acc[name] = () => slot
           return acc
         }
@@ -322,6 +332,8 @@ export function mount(
 
   // we define props as reactive so that way when we update them with `setProps`
   // Vue's reactivity system will cause a rerender.
+
+  // why props include attrs and ref vm.$refs[MOUNT_COMPONENT_REF]
   const props = reactive({
     ...options?.attrs,
     ...options?.propsData,
@@ -416,11 +428,14 @@ export function mount(
   // stubs
   // even if we are using `mount`, we will still
   // stub out Transition and Transition Group by default.
+
+  // why shallowMount
   stubComponents(global.stubs, options?.shallow)
 
   // mount the app!
   const vm = app.mount(el)
 
+  // why need vm.$refs[MOUNT_COMPONENT_REF]
   const App = vm.$refs[MOUNT_COMPONENT_REF] as ComponentPublicInstance
   return createWrapper(app, App, setProps, functionalComponentEmits)
 }

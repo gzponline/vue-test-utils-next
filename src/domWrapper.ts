@@ -165,7 +165,7 @@ export class DOMWrapper<ElementType extends Element> {
 
     return new DOMWrapper(parentElement).trigger('change')
   }
-
+  // why work
   async trigger(eventString: string, options?: TriggerOptions) {
     if (options && options['target']) {
       throw Error(
@@ -194,7 +194,7 @@ export class DOMWrapper<ElementType extends Element> {
 
       return hasDisabledAttribute && elementCanBeDisabled
     }
-
+    // why good
     if (this.element && !isDisabled()) {
       const event = createDOMEvent(eventString, options)
       this.element.dispatchEvent(event)

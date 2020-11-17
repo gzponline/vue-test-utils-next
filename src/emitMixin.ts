@@ -1,5 +1,6 @@
 import { getCurrentInstance } from 'vue'
 
+// why
 export const attachEmitListener = () => {
   return {
     beforeCreate() {
