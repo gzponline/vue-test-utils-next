@@ -20,6 +20,7 @@ export class VueWrapper<T extends ComponentPublicInstance> {
     app: App | null,
     vm: ComponentPublicInstance,
     setProps?: (props: Record<string, any>) => void,
+    // why functionalEmits may be {}
     functionalEmits?: Record<string, unknown[]>
   ) {
     this.__app = app
@@ -244,6 +245,7 @@ export class VueWrapper<T extends ComponentPublicInstance> {
   }
 }
 
+// createWrapper(app, App, setProps, functionalComponentEmits)
 export function createWrapper<T extends ComponentPublicInstance>(
   app: App | null,
   vm: ComponentPublicInstance,
