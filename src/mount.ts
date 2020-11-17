@@ -322,6 +322,8 @@ export function mount(
     )
 
   // override component data with mounting options data
+
+  // why mixin data with mixin
   if (options?.data) {
     const dataMixin = createDataMixin(options.data())
     ;(component as any).mixins = [
