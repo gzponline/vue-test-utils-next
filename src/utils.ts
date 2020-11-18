@@ -29,6 +29,7 @@ export function mergeGlobalProperties(
     components: { ...configGlobal.components, ...mountGlobal.components },
     provide: { ...configGlobal.provide, ...mountGlobal.provide },
     mocks: { ...configGlobal.mocks, ...mountGlobal.mocks },
+    // why as Omit<AppConfig,'isNativeTag'>,
     config: { ...configGlobal.config, ...mountGlobal.config } as Omit<
       AppConfig,
       'isNativeTag'

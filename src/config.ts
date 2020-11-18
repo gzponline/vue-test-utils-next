@@ -51,6 +51,7 @@ class Pluggable<Instance = DOMWrapper<Element>> {
   }
 }
 
+// why
 export const config: GlobalConfigOptions = {
   global: {
     stubs: {

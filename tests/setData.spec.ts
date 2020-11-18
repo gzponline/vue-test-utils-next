@@ -76,6 +76,7 @@ describe('setData', () => {
   })
 
   it('does not modify composition API setup data', async () => {
+    // why defineComponent vs creatApp
     const Component = defineComponent({
       template: `<div>Count is: {{ count }}</div>`,
       setup: () => ({ count: ref(1) })

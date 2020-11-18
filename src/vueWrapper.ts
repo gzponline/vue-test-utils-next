@@ -24,17 +24,20 @@ export class VueWrapper<T extends ComponentPublicInstance> {
     functionalEmits?: Record<string, unknown[]>
   ) {
     this.__app = app
+    // why root whether ref[root]
     // root is null on functional components
     this.rootVM = vm?.$root
     this.componentVM = vm as T
     this.__setProps = setProps
     this.__functionalEmits = functionalEmits
     // plugins hook
+    // why extend this
     config.plugins.VueWrapper.extend(this)
   }
 
   private get hasMultipleRoots(): boolean {
     // if the subtree is an array of children, we have multiple root nodes
+    // why what vm.$.subTree.shapeFlag
     return this.vm.$.subTree.shapeFlag === ShapeFlags.ARRAY_CHILDREN
   }
 
@@ -107,6 +110,7 @@ export class VueWrapper<T extends ComponentPublicInstance> {
   find<T extends Element>(selector: string): DOMWrapper<T>
   find(selector: string): DOMWrapper<Element> {
     // force using the parentElement to allow finding the root element
+    // why vm.$refs[MOUNT_COMPONENT_REF].$el.parentElement
     const result = this.parentElement.querySelector(selector)
     if (result) {
       return new DOMWrapper(result)
@@ -229,6 +233,7 @@ export class VueWrapper<T extends ComponentPublicInstance> {
   }
 
   trigger(eventString: string, options?: TriggerOptions) {
+    // why
     const rootElementWrapper = new DOMWrapper(this.element)
     return rootElementWrapper.trigger(eventString, options)
   }
@@ -247,10 +252,13 @@ export class VueWrapper<T extends ComponentPublicInstance> {
 
 // createWrapper(app, App, setProps, functionalComponentEmits)
 export function createWrapper<T extends ComponentPublicInstance>(
+  // why vue create app const app = createApp(Parent)
   app: App | null,
+  // why App = vm.$refs[MOUNT_COMPONENT_REF] as ComponentPublicInstance
   vm: ComponentPublicInstance,
   setProps?: (props: Record<string, any>) => void,
   functionalComponentEmits?: Record<string, unknown[]>
 ): VueWrapper<T> {
+  // why <T> and App<HostElement = any>
   return new VueWrapper<T>(app, vm, setProps, functionalComponentEmits)
 }

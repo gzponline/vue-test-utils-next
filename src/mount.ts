@@ -335,7 +335,7 @@ export function mount(
   // we define props as reactive so that way when we update them with `setProps`
   // Vue's reactivity system will cause a rerender.
 
-  // why props include attrs and ref
+  // why props include attrs and ref vm.$refs[MOUNT_COMPONENT_REF]
   const props = reactive({
     ...options?.attrs,
     ...options?.propsData,
