@@ -1,5 +1,5 @@
 import { defineComponent, h } from 'vue'
-// todo
+// why
 // TODO: Borrow typings from vue-router-next
 export const RouterLinkStub = defineComponent({
   name: 'RouterLinkStub',

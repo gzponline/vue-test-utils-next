@@ -81,7 +81,7 @@ export function mount(
 
 // Functional component with emits
 
-// todo 为什么 <Props, E extends EmitsOptions = {}>
+// why 为什么 <Props, E extends EmitsOptions = {}>
 // 为什么 声明类型和 实际js 都是 export function mount
 
 export function mount<Props, E extends EmitsOptions = {}>(
@@ -250,7 +250,7 @@ export function mount(
     // but functional components do not support mixins, so we need to wrap it
     // and make it a non-functional component for testing purposes.
 
-    // todo why defineComponent what is originalComponent
+    // why defineComponent what is originalComponent
     component = defineComponent({
       setup: (_, { attrs, slots, emit }) => () => {
         return h((props: any, ctx: any) =>
