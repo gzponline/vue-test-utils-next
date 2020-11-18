@@ -14,14 +14,12 @@ export class VueWrapper<T extends ComponentPublicInstance> {
   private rootVM: ComponentPublicInstance
   private __app: App | null
   private __setProps: ((props: Record<string, any>) => void) | undefined
-  private __functionalEmits: Record<string, unknown[]>
 
   constructor(
     app: App | null,
     vm: ComponentPublicInstance,
-    setProps?: (props: Record<string, any>) => void,
+    setProps?: (props: Record<string, any>) => void
     // why functionalEmits may be {}
-    functionalEmits?: Record<string, unknown[]>
   ) {
     this.__app = app
     // why root whether ref[root]
@@ -29,7 +27,7 @@ export class VueWrapper<T extends ComponentPublicInstance> {
     this.rootVM = vm?.$root
     this.componentVM = vm as T
     this.__setProps = setProps
-    this.__functionalEmits = functionalEmits
+
     // plugins hook
     // why extend this
     config.plugins.VueWrapper.extend(this)
@@ -256,9 +254,7 @@ export function createWrapper<T extends ComponentPublicInstance>(
   app: App | null,
   // why App = vm.$refs[MOUNT_COMPONENT_REF] as ComponentPublicInstance
   vm: ComponentPublicInstance,
-  setProps?: (props: Record<string, any>) => void,
-  functionalComponentEmits?: Record<string, unknown[]>
+  setProps?: (props: Record<string, any>) => void
 ): VueWrapper<T> {
-  // why <T> and App<HostElement = any>
-  return new VueWrapper<T>(app, vm, setProps, functionalComponentEmits)
+  return new VueWrapper<T>(app, vm, setProps)
 }

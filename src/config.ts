@@ -68,8 +68,10 @@ export const config: GlobalConfigOptions = {
     renderStubDefaultSlot: false
   },
   plugins: {
+    // why
     VueWrapper: new Pluggable(),
     DOMWrapper: new Pluggable()
   },
+  // why
   renderStubDefaultSlot: false
 }

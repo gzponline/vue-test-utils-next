@@ -81,9 +81,6 @@ export function mount(
 
 // Functional component with emits
 
-// why 为什么 <Props, E extends EmitsOptions = {}>
-// 为什么 声明类型和 实际js 都是 export function mount
-
 export function mount<Props, E extends EmitsOptions = {}>(
   originalComponent: FunctionalComponent<Props, E>,
   options?: MountingOptions<Props>
@@ -242,8 +239,6 @@ export function mount(
   // normalise the incoming component
   let component
 
-  const functionalComponentEmits: Record<string, unknown[]> = {}
-
   if (isFunctionalComponent(originalComponent)) {
     // we need to wrap it like this so we can capture emitted events.
     // we capture events using a mixin that mutates `emit` in `beforeCreate`,
@@ -291,8 +286,7 @@ export function mount(
       (
         acc: { [key: string]: Function },
         [name, slot]: [string, Slot]
-      ): // why { [key: string]: Function }
-      { [key: string]: Function } => {
+      ): { [key: string]: Function } => {
         // case of an SFC getting passed
         if (typeof slot === 'object' && 'render' in slot) {
           acc[name] = slot.render
@@ -305,7 +299,6 @@ export function mount(
         }
 
         if (typeof slot === 'object') {
-          // why  acc[name]()()
           acc[name] = () => slot
           return acc
         }
@@ -364,8 +357,8 @@ export function mount(
 
   // create the app
   const app = createApp(Parent)
-
   // global mocks mixin
+  // why what mock
   if (global?.mocks) {
     const mixin = {
       beforeCreate() {
@@ -431,7 +424,7 @@ export function mount(
   // even if we are using `mount`, we will still
   // stub out Transition and Transition Group by default.
 
-  // why shallowMount
+  // why shallowMount why global
   stubComponents(global.stubs, options?.shallow)
 
   // mount the app!
@@ -439,7 +432,8 @@ export function mount(
 
   // why need vm.$refs[MOUNT_COMPONENT_REF]
   const App = vm.$refs[MOUNT_COMPONENT_REF] as ComponentPublicInstance
-  return createWrapper(app, App, setProps, functionalComponentEmits)
+  // console.log(vm.$parent, vm.$root)
+  return createWrapper(app, App, setProps)
 }
 
 export const shallowMount: typeof mount = (component: any, options?: any) => {
